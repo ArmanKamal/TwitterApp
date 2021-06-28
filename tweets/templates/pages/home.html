@@ -4,6 +4,29 @@
 
 {% block content %}
     <div class="container">
-        Home Page
+        <form method="POST"  action="{% url 'create_tweet' %}">
+        {% csrf_token %}
+            <textarea class="form-control" name="content" placeholder="Your Tweet"></textarea>
+            <button type="submit" class="btn btn-success" >Tweet</button>
+        </form>
+        <div id="tweets"></div>
     </div>
+    <script>
+
+    const tweetsElement = document.getElementById('tweets')
+        fetch('/tweets')
+            .then((res) => res.json())
+            .then((data) => {
+                let newData = data.response
+                let finalTweet = ""
+                newData.map((list) => {
+                    let currentItem = `<h1>${list.id}</h1>
+                                        <p>${list.content}</p>
+                    `
+                    finalTweet += currentItem
+                })
+                tweetsElement.innerHTML = finalTweet
+               })
+            
+    </script>
 {% endblock %}
