@@ -1,9 +1,9 @@
 from tweets.forms import TweetForm
 from django.shortcuts import render,redirect
+from django.conf import settings
 from django.http import JsonResponse
 
 from .models import Tweet
-# Create your views here.
 
 def home_view(request):
     context = {
@@ -21,6 +21,7 @@ def tweet_list_view(request, *args, **kwargs):
 
 
 def tweet_create_view(request):
+    
     context = {
 
     }
