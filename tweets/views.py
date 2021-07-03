@@ -1,31 +1,18 @@
-
-from re import A
-from rest_framework import serializers
+from rest_framework import permissions
 from rest_framework.response import Response
-from tweets.forms import TweetForm
-from django.shortcuts import render,redirect
-from django.conf import settings
-from django.http import JsonResponse
+
 from .serializers import TweetSerializer
 from rest_framework.views import APIView
-
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from .models import Tweet
 
-def home_view(request):
-    context = {
 
-    }
-    return render(request,"pages/home.html",context)
+### Api for Creating Tweets ###
 
-def tweet_list_view(request, *args, **kwargs):
-    qs = Tweet.objects.all()
-    tweet_list = [{"id":x.id,"content":x.content} for x in qs]
-    data = {
-        "response":tweet_list
-    }
-    return JsonResponse(data)
-
+@permission_classes([IsAuthenticated])
 class TweetCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     def post(self,request):
         serializer = TweetSerializer(data = request.POST)
         if serializer.is_valid(raise_exception=True):
@@ -33,7 +20,7 @@ class TweetCreateView(APIView):
             return Response(serializer.data, status=201)
         return Response({},status=400)
 
-
+### Api for List of Tweets ###
 class TweetListView(APIView):
     def get(self,request):
         qs = Tweet.objects.all()
@@ -41,7 +28,10 @@ class TweetListView(APIView):
         return Response(serializer.data,status=200)
 
 
+### Api for Detail tweet ###
+
 class TweetDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     def get(self,request,tweet_id):
         list = Tweet.objects.filter(id=tweet_id)
         if not list.exists():
@@ -50,31 +40,19 @@ class TweetDetailView(APIView):
         serializer = TweetSerializer(obj)
         return Response(serializer.data, status=200)
 
-def tweet_create_view(request):
-    
-    context = {
+class TweetDeleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
 
-    }
-    if request.method =="POST":
-        form = TweetForm(request.POST or None)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            form = TweetForm()
-        return redirect('/tweets/home')
-    return render(request,"pages/home.html",context)
+    def delete(request,tweet_id,*args,**kwargs):
+        tweet_list = Tweet.objects.filter(id=tweet_id)
+        if not tweet_list.exists():
+            return Response({}, status=404)
+        qs = tweet_list.filter(user=request.user)
+        if not qs.exists():
+            return Response({"message":"You cannot delete this tweet"},status=401)
+        obj = qs.first()
+        obj.delete()
+        return Response({"message":"Tweet was deleted"},status=200)
         
 
-def  tweet_detail_view(request, tweet_id):
-    data = {
-        "id":tweet_id,
-    }
-    status = 200
-    try:
-        obj = Tweet.objects.get(id=tweet_id)
-        data['content'] = obj.content
-    except:
-        data['message'] = "Not found"
-        status = 404
-    return JsonResponse(data,status=status) 
 
