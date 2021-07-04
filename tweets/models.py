@@ -21,3 +21,4 @@ class Tweet(models.Model):
     likers = ManyToManyField(User,related_name='tweet_user',blank=True,through=TweetLike)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+

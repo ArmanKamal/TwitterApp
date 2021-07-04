@@ -1,7 +1,7 @@
-from rest_framework import permissions
+from rest_framework import permissions, serializers
 from rest_framework.response import Response
 
-from .serializers import TweetSerializer
+from .serializers import TweetActionSerializer, TweetSerializer
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -56,3 +56,22 @@ class TweetDeleteView(APIView):
         
 
 
+class TweetActionView(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    def post(self,request,tweet_id):
+        serializer = TweetActionSerializer(data=request.POST)
+        if serializer.is_valid(raise_exception=True):
+            data = serializer.validated_data
+            tweet_id = data.get("id")
+            action = data.get("action")
+            tweet_list = Tweet.objects.filter(id=tweet_id)
+            if not tweet_list.exists():
+                return Response({},status=404)
+            obj = tweet_list[0]
+            if action == "like":
+                obj.likers.add(request.user)
+            elif action == "unlike":
+                obj.likes.remove(request.user)
+            elif action == "retweet":
+                pass
+        return Response({"message":"Tweet Liked"},status=200)
