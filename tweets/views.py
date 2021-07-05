@@ -70,8 +70,11 @@ class TweetActionView(APIView):
             obj = tweet_list[0]
             if action == "like":
                 obj.likers.add(request.user)
+
             elif action == "unlike":
                 obj.likes.remove(request.user)
             elif action == "retweet":
-                pass
+                parent_obj  = obj
+                new_tweet = Tweet.objects.create(user=request.user, parent=parent_obj)
+                
         return Response({"message":"Tweet Liked"},status=200)
