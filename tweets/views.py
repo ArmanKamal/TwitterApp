@@ -1,7 +1,7 @@
 from rest_framework import permissions, serializers
 from rest_framework.response import Response
 
-from .serializers import TweetActionSerializer, TweetSerializer
+from .serializers import TweetActionSerializer,TweetCreateSerializer,TweetSerializer
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -14,7 +14,7 @@ from .models import Tweet
 class TweetCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
     def post(self,request):
-        serializer = TweetSerializer(data = request.POST)
+        serializer = TweetCreateSerializer(data = request.POST)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=201)
@@ -25,6 +25,7 @@ class TweetListView(APIView):
     def get(self,request):
         qs = Tweet.objects.all()
         serializer = TweetSerializer(qs,many=True)
+        print(serializer.data)
         return Response(serializer.data,status=200)
 
 
@@ -64,6 +65,7 @@ class TweetActionView(APIView):
             data = serializer.validated_data
             tweet_id = data.get("id")
             action = data.get("action")
+            content = data.get("content")
             tweet_list = Tweet.objects.filter(id=tweet_id)
             if not tweet_list.exists():
                 return Response({},status=404)
@@ -75,6 +77,6 @@ class TweetActionView(APIView):
                 obj.likes.remove(request.user)
             elif action == "retweet":
                 parent_obj  = obj
-                new_tweet = Tweet.objects.create(user=request.user, parent=parent_obj)
+                new_tweet = Tweet.objects.create(user=request.user, parent=parent_obj,content=content)
                 
         return Response({"message":"Tweet Liked"},status=200)
