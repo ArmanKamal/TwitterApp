@@ -44,7 +44,7 @@ class TweetDetailView(APIView):
 class TweetDeleteView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
 
-    def delete(request,tweet_id,*args,**kwargs):
+    def delete(self,request,tweet_id):
         tweet_list = Tweet.objects.filter(id=tweet_id)
         if not tweet_list.exists():
             return Response({}, status=404)
@@ -59,8 +59,8 @@ class TweetDeleteView(APIView):
 
 class TweetActionView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    def post(self,request,tweet_id):
-        serializer = TweetActionSerializer(data=request.POST)
+    def post(self,request):
+        serializer = TweetActionSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             data = serializer.validated_data
             tweet_id = data.get("id")
@@ -70,13 +70,20 @@ class TweetActionView(APIView):
             if not tweet_list.exists():
                 return Response({},status=404)
             obj = tweet_list[0]
+
             if action == "like":
                 obj.likers.add(request.user)
+                serializer = TweetSerializer(obj)
+                return Response(serializer.data, status=200)
 
             elif action == "unlike":
-                obj.likes.remove(request.user)
+                obj.likers.remove(request.user)
+                serializer = TweetSerializer(obj)
+                return Response(serializer.data, status=200)
+
             elif action == "retweet":
                 parent_obj  = obj
-                new_tweet = Tweet.objects.create(user=request.user, parent=parent_obj,content=content)
-                
-        return Response({"message":"Tweet Liked"},status=200)
+                new_tweet = Tweet.objects.create(user=request.user, parent_tweet=parent_obj,content=content)
+                serializer = TweetSerializer(new_tweet)
+                return Response(serializer.data, status=201)
+        return Response({'Not a valid action'})

@@ -23,3 +23,10 @@ class Tweet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
+    class Meta:
+        ordering = ['-id']
+
+    @property
+    def is_retweet(self):
+        return self.parent !=None
+
