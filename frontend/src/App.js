@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from 'react'
+import TweetList from './component/Tweets/TweetList'
+import Navbar from './component/Navbar';
 
 function App() {
 
@@ -13,14 +14,12 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <>
+       <Navbar />
       {tweets.map((tweet) => 
-      <div>
-        <h1>{tweet.user}</h1>
-        <h2>{tweet.content}</h2>
-      </div>
+        <TweetList tweet={tweet} />
       )}
-    </div>
+    </>
   );
 }
 
