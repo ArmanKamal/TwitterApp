@@ -3,22 +3,23 @@ import './App.css';
 import {useEffect, useState} from 'react'
 
 function App() {
+
+  const [tweets, setTweets] = useState([])
+  useEffect(() => {
+     fetch('http://127.0.0.1:8000/api/tweets/')
+     .then((response) => response.json())
+     .then((data) => setTweets(data))
+  
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {tweets.map((tweet) => 
+      <div>
+        <h1>{tweet.user}</h1>
+        <h2>{tweet.content}</h2>
+      </div>
+      )}
     </div>
   );
 }
