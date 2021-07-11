@@ -1,7 +1,7 @@
-import './App.css';
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import TweetList from './component/Tweets/TweetList'
 import Navbar from './component/Navbar';
+import TweetCreate from './component/Tweets/TweetCreate';
 
 function App() {
 
@@ -14,12 +14,16 @@ function App() {
   }, [])
 
   return (
-    <>
+    <React.Fragment>
        <Navbar />
-      {tweets.map((tweet) => 
-        <TweetList tweet={tweet} />
-      )}
-    </>
+       <div className="container mx-auto">
+         <TweetCreate />
+        {tweets.map((tweet) => 
+          <TweetList tweet={tweet} />
+        )}
+       </div>
+   
+    </React.Fragment>
   );
 }
 
