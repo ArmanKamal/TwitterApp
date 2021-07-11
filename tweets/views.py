@@ -14,7 +14,7 @@ from .models import Tweet
 class TweetCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
     def post(self,request):
-        serializer = TweetCreateSerializer(data = request.POST)
+        serializer = TweetCreateSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=201)
