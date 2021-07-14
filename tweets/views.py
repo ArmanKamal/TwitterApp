@@ -24,6 +24,9 @@ class TweetCreateView(APIView):
 class TweetListView(APIView):
     def get(self,request):
         qs = Tweet.objects.all()
+        username = request.GET.get('username')
+        if username != None:
+            qs = qs.filter(user__username__iexact=username)
         serializer = TweetSerializer(qs,many=True)
         print(serializer.data)
         return Response(serializer.data,status=200)
