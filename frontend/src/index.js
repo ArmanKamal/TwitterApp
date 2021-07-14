@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 
+const e = React.createElement
 ReactDOM.render(
- 
-    <App />
+  
+    e(App, root.dataset)
 ,
   document.getElementById('root')
 );
