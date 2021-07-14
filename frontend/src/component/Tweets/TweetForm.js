@@ -1,13 +1,13 @@
-import React, { useState,useCallback } from 'react';
+import React, { useState,useRef } from 'react';
 import getCookie from '../../csrf_token'
 const TweetForm = ({newTweet}) => {
     let csrftoken = getCookie('csrftoken');
-    const [content, setContent] = useState('')
+    const textArearef = useRef()
     const handleSubmit = (e) =>{
         
         e.preventDefault()
         let content = e.target.elements.content.value;
-        // newTweet(content)
+       
         fetch('http://127.0.0.1:8000/api/tweets/create/', {
                 method: 'POST', 
                 headers: {
@@ -19,6 +19,7 @@ const TweetForm = ({newTweet}) => {
                 })
                 .then(response => response.json())
                 .then(data => {
+                    textArearef.current.value = ''
                     newTweet(data)
                 })
                 .catch((error) => {
@@ -29,11 +30,9 @@ const TweetForm = ({newTweet}) => {
     }
 
 
-
-    console.log("Form");
     return (
         <form className="form" onSubmit={handleSubmit} method="POST">
-            <textarea  className="form-control"  name="content"  placeholder="What's happening?"></textarea>
+            <textarea ref={textArearef} className="form-control"  name="content"  placeholder="What's happening?"></textarea>
             <button  className="btn btn-danger my-4" type="submit">Tweet</button>
         </form>
     );
