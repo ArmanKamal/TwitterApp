@@ -125,6 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static')
 ]
@@ -133,13 +135,23 @@ STATICFILES_DIRS = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
-DEFAULT_AUTHENTICATION_CLASSES = [ 'rest_framework.authentication.SessionAuthentication' ]
+DEFAULT_AUTHENTICATION_CLASSES = [ 'rest_framework_simplejwt.authentication.JWTAuthentication' ]
 
 
 if DEBUG:
     DEFAULT_AUTHENTICATION_CLASSES += [
         'twitterapp.rest_api.dev.DevAuthentication'
     ]
+
+
+from datetime import timedelta
+
+...
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES
