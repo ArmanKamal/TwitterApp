@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {Provider} from 'react-redux'
+import store from './store'
 
-
-const e = React.createElement
 ReactDOM.render(
-  
-    e(App, root.dataset)
+    <Provider store={store}>
+      <App />
+    </Provider>
 ,
   document.getElementById('root')
 );
