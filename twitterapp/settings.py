@@ -138,15 +138,11 @@ CORS_URLS_REGEX = r'^/api/.*$'
 DEFAULT_AUTHENTICATION_CLASSES = [ 'rest_framework_simplejwt.authentication.JWTAuthentication' ]
 
 
-if DEBUG:
-    DEFAULT_AUTHENTICATION_CLASSES += [
-        'twitterapp.rest_api.dev.DevAuthentication'
-    ]
 
 
 from datetime import timedelta
 
-...
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),

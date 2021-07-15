@@ -1,23 +1,42 @@
 from rest_framework import permissions, serializers
 from rest_framework.response import Response
-
+from django.contrib.auth.hashers import make_password
 from .serializers import TweetActionSerializer,TweetCreateSerializer,TweetSerializer
 from rest_framework.views import APIView
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Tweet
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer,UserSerializerWithToken
+from django.contrib.auth.models import User
 
 
 ## Api for User ##
-
+@permission_classes([IsAuthenticated])
 class UserProfile(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     def get(self,request):
         user = request.user
         serializer = UserSerializer(user,many=False)
         return Response(serializer.data,status=200)
+
+@api_view(['POST'])
+def RegisterView(request):
+    data = request.data
+    print(data)
+    try:
+        user = User.objects.create(
+            first_name=data['name'],
+            username = data['email'],
+            email = data['email'],
+            password =make_password(data['password'])
+        )
+        serializer = UserSerializerWithToken(user,many=False)
+        return Response(serializer.data,status=201)
+    except:
+        messages={'detail':'Email already exists'}
+        return Response(messages, status=400)
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self,attrs):
