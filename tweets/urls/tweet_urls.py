@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TweetListView,TweetCreateView,TweetDetailView,TweetDeleteView,TweetActionView
+from tweets.views import TweetListView,TweetCreateView,TweetDetailView,TweetDeleteView,TweetActionView
 
 urlpatterns = [
 

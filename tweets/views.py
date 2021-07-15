@@ -24,7 +24,6 @@ class UserProfile(APIView):
 @api_view(['POST'])
 def RegisterView(request):
     data = request.data
-    print(data)
     try:
         user = User.objects.create(
             first_name=data['name'],
@@ -42,6 +41,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self,attrs):
         data = super().validate(attrs)
         serializer = UserSerializerWithToken(self.user).data
+        print(serializer)
 
         for k,v in serializer.items():
             data[k] = v
