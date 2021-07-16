@@ -4,28 +4,17 @@ import SingleTweet from './SingleTweet'
 import TweetForm from './TweetForm'
 import { listTweet } from '../../actions/TweetAction'
 function TweetList(props) {
-    const {username} = props
-    const [tweets, setTweets] = useState([])
+
     const [currentTweets, setCurrentTweets] = useState([]);
- 
+    const TweetList = useSelector(state => state.TweetList)
+    const { error, loading, tweets} = TweetList
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(listTweet())
-        updateTweets();
-    }, [currentTweets])
+     
+    }, [dispatch])
 
-    const updateTweets = function(){
-        let endpoint = 'http://127.0.0.1:8000/api/tweets/'
-        if(username){
-        endpoint = `http://127.0.0.1:8000/api/tweets/?username=${username}`
-        }
-        fetch(endpoint)
-        .then((response) => response.json())
-        .then((data) => {
-        setTweets(data)
-        })
-        
-    }  
+    
 
     const newTweet = (data) => {
 
