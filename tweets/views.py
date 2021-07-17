@@ -6,9 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Tweet
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserSerializer,UserSerializerWithToken
+from .serializers import UserSerializer,UserSerializerWithToken,MyTokenObtainPairSerializer
 from django.contrib.auth.models import User
 
 
@@ -36,16 +36,6 @@ def RegisterView(request):
     except:
         messages={'detail':'Email already exists'}
         return Response(messages, status=400)
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self,attrs):
-        data = super().validate(attrs)
-        serializer = UserSerializerWithToken(self.user).data
-        print(serializer)
-
-        for k,v in serializer.items():
-            data[k] = v
-        return data
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

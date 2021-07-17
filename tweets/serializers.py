@@ -4,6 +4,7 @@ from rest_framework import serializers
 from .models import Tweet
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class TweetActionSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -61,4 +62,13 @@ class UserSerializerWithToken(UserSerializer):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
 
-   
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self,attrs):
+        data = super().validate(attrs)
+        serializer = UserSerializerWithToken(self.user).data
+        print(serializer)
+
+        for k,v in serializer.items():
+            data[k] = v
+        return data
