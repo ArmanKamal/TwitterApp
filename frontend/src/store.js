@@ -6,13 +6,14 @@ import { UserLoginReducer } from './reducers/UserReducers'
 
 const reducer = combineReducers({
     TweetList: TweetListReducer,
-    UserLogin: UserLoginReducer
+    UserLogin: UserLoginReducer,
 
 })
 
-const userInfoFromStorage = localStorage.getItem('userInfo')? JSON.parse(localStorage.getItem('userInfo')): null
+const userInfoFromStorage = localStorage.getItem('userInfo')?
+             JSON.parse(localStorage.getItem('userInfo')): null
 const initialState = {
-    userLogin:{userInfo: userInfoFromStorage}
+    UserLogin : {userInfo: userInfoFromStorage}
 }
 const middleware = [thunk]
 
