@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import SingleTweet from './SingleTweet'
 import TweetForm from './TweetForm'
 import { listTweet } from '../../actions/TweetAction'
+import Loader from '../Loader'
+import Message from '../Message'
 function TweetList(props) {
 
     const [currentTweets, setCurrentTweets] = useState([]);
@@ -36,10 +38,17 @@ function TweetList(props) {
     return (
         <React.Fragment>
             {canTweet === true && <TweetForm newTweet={newTweet} />}
-        
-          {tweets.map((tweet) => 
-          <SingleTweet tweet={tweet}  didRetweet={didRetweet}/>
-        )}
+        {
+            loading? <Loader />
+                : error ?<Message>{error}</Message>
+                    :
+                    <div>
+                        {tweets.map((tweet) => 
+                            <SingleTweet tweet={tweet} key={tweet.id} didRetweet={didRetweet}/>
+                        )}
+                    </div> 
+                   
+        }
         </React.Fragment>
     )
 }

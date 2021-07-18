@@ -12,12 +12,12 @@ export const login = (email, password) => async(dispatch) =>{
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'email':email,
+                'username':email,
                 'password':password
             }) 
           });
           const data = await response.json()
-
+           
           dispatch({
                 type:"USER_LOGIN_SUCCESS",
                 payload:data
@@ -31,8 +31,15 @@ export const login = (email, password) => async(dispatch) =>{
                 type: "USER_LOGIN_FAIL",
                 payload: error.response && error.response.data.message
                 ?error.response.data.message
-                :error.message
+                :error.message.detail
             })
         }
         
+}
+
+export const logout = () =>(dispatch) =>{
+    localStorage.removeItem('userInfo')
+    dispatch({
+        type: "USER_LOGOUT"
+    })
 }

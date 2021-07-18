@@ -9,10 +9,13 @@ function App(props) {
   return (
     <Router>
       <Navbar />
-      <main className="py-3">
-        <Route path='/' component={HomeScreen} exact />
-        <Route path='/login' component={LoginScreen} />
-      </main>
+      <div className="container">
+        <main className="py-3">
+          <Route path='/' component={HomeScreen} exact />
+          <Route path='/login' component={LoginScreen} />
+        </main>
+      </div>
+    
     </Router>
   );
 }
