@@ -2,12 +2,12 @@ import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools} from 'redux-devtools-extension'
 import {TweetListReducer} from './reducers/TweetReducers'
-import { UserLoginReducer } from './reducers/UserReducers' 
+import { UserLoginReducer, UserRegisterReducer } from './reducers/UserReducers' 
 
 const reducer = combineReducers({
     TweetList: TweetListReducer,
     UserLogin: UserLoginReducer,
-
+    UserRegisterReducer: UserRegisterReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')?
