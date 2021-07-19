@@ -17,15 +17,6 @@ function TweetList(props) {
     }, [dispatch])
 
     
-
-    const newTweet = (data) => {
-
-        let oldTweets = tweets;
-        oldTweets.unshift(data)
-        setCurrentTweets(data)  
-    
-    }
-
     const didRetweet = (data) => {
     console.log(data)
         let oldTweets = tweets;
@@ -37,7 +28,7 @@ function TweetList(props) {
     const canTweet = props.canTweet === 'false'? true: true
     return (
         <React.Fragment>
-            {canTweet === true && <TweetForm newTweet={newTweet} />}
+            {canTweet === true && <TweetForm  />}
         {
             loading? <Loader />
                 : error ?<Message>{error}</Message>

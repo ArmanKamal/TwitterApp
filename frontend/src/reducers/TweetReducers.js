@@ -8,8 +8,26 @@ export const TweetListReducer = (state = {tweets:[]},action) =>{
 
         case "TWEET_LIST_FAILED":
             return {loading:false, error: action.payload}
+        
 
         default:
             return state
      }
 }   
+
+export const TweetCreateReducer = (state={},action) => {
+    switch(action.type){
+        case "TWEET_CREATE_REQUEST":
+            return {loading: true}
+
+        case "TWEET_CREATE_SUCCESS":
+            return {loading:false, success:true,tweet: action.payload}
+
+        case "TWEET_CREATE_FAIL":
+            return {loading:false,error:action.payload}
+        case "TWEET_CREATE_RESET":
+                return {}
+        default:
+            return state
+    }    
+}

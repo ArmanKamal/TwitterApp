@@ -1,41 +1,45 @@
-import React, { useState,useRef } from 'react';
-import getCookie from '../../csrf_token'
-const TweetForm = ({newTweet}) => {
-    let csrftoken = getCookie('csrftoken');
-    const textArearef = useRef()
+import React, { useState,useEffect } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import { tweet_create,listTweet } from '../../actions/TweetAction';
+const TweetForm = () => {
+
+    
+    const [content, setContent] = useState('')
+
+    const dispatch = useDispatch()
+
+    const tweetCreate = useSelector(state => state.TweetCreate)
+    const {tweet,success} = tweetCreate
+
+    const tweetList = useSelector(state => state.TweetList)
+    const {tweets} = tweetList
+
+    useEffect(() => {
+        if(success){
+            dispatch({type: "TWEET_CREATE_RESET"})
+            dispatch(listTweet())
+        }
+    },[dispatch,success])
+
+
     const handleSubmit = (e) =>{
         
         e.preventDefault()
-        let content = e.target.elements.content.value;
-       
-        fetch('http://127.0.0.1:8000/api/tweets/create/', {
-                method: 'POST', 
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({content:content}),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    textArearef.current.value = ''
-                    newTweet(data)
-                })
-                .catch((error) => {
-                console.error('Error:', error);
-                });
-         
+
+        dispatch(
+            tweet_create(content)
+        )
+        setContent('')
        
     }
 
 
     return (
         <form className="form" onSubmit={handleSubmit} method="POST">
-            <textarea ref={textArearef} className="form-control"  name="content"  placeholder="What's happening?"></textarea>
+            <textarea  className="form-control"  onChange={(e) => setContent(e.target.value)} value={content} name="content"  placeholder="What's happening?"></textarea>
             <button  className="btn btn-danger my-4" type="submit">Tweet</button>
         </form>
     );
-};
 
+}
 export default TweetForm

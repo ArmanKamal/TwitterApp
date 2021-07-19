@@ -6,13 +6,13 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Tweet
-
+from profiles.models import Profile
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer,UserSerializerWithToken,MyTokenObtainPairSerializer
 from django.contrib.auth.models import User
 
 
-## Api for User ##
+# Api for User ##
 @permission_classes([IsAuthenticated])
 class UserProfile(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
@@ -60,7 +60,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 ### Api for Creating Tweets ###
 
-@permission_classes([IsAuthenticated])
+
 class TweetCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
     def post(self,request):

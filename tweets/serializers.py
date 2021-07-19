@@ -1,3 +1,5 @@
+from profiles.models import Profile
+from profiles.serializers import ProfileSerializer
 from re import L
 from django.db import models
 from rest_framework import serializers
@@ -51,6 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
         if name == '':
             name = obj.email
         return name
+
 
 class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)

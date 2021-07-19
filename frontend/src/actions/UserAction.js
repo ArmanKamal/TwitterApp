@@ -57,7 +57,10 @@ export const register = (name,email, password) => async(dispatch) =>{
                 'name':name
             }) 
           });
+     
           const data = await response.json()
+
+          
            
           dispatch({
                 type:"USER_REGISTER_SUCCESS",

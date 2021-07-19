@@ -1,4 +1,4 @@
-from tweets.views import MyTokenObtainPairView,UserProfile,RegisterView,UpdateUserProfile
+from tweets.views import MyTokenObtainPairView,RegisterView,UserProfile,UpdateUserProfile
 from django.urls import path
 urlpatterns = [
     path('login/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
