@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import {user_detail} from '../actions/UserAction'
+import {user_detail,update_profile} from '../actions/UserAction'
 import Message  from '../component/Message'
 
 function ProfileScreen({location,history}) {
@@ -18,6 +18,11 @@ function ProfileScreen({location,history}) {
     const userLogin = useSelector(state => state.UserLogin)
     const {userInfo} = userLogin
 
+    const userUpdateProfile = useSelector(state => state.UserUpdateProfile)
+    const {success} = userUpdateProfile
+
+
+
 
     useEffect(() => {
         console.log(userInfo)
@@ -26,23 +31,34 @@ function ProfileScreen({location,history}) {
         }
         else{
             
-            if(!user || !user.name){
+            if(!user || !user.name || success){
+                dispatch({type: "USER_UPDATE_PROFILE_RESET"})
                 dispatch(user_detail('profile'))
-                console.log(user)
             }
             else{
                 setName(user.name)
                 setEmail(user.email)
             }
         }
-    },[dispatch,user, history,userInfo])
+    },[dispatch,user, history,userInfo,success])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
             setMessage('Password donot match')
         }
-        console.log('Updating')
+        else{
+            dispatch(update_profile({
+                'id': user.id,
+                'name':name,
+                'email':email,
+                'password':password
+            }))
+
+            setMessage('')
+         
+        }   
+        
     }
 
     return (

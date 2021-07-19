@@ -43,6 +43,9 @@ export const UserDetailReducer = (state={user:{}},action) => {
         case "USER_DETAIL_SUCCESS":
             return {loading:false, user: action.payload}
 
+        case "USER_DETAIL_RESET":
+            return {user:{}}
+
         case "USER_DETAIL_FAIL":
             return {loading:false,error:action.payload}
 
@@ -50,3 +53,24 @@ export const UserDetailReducer = (state={user:{}},action) => {
             return state
     }  
 }
+
+
+export const UserUpdateProfileReducer = (state={},action) => {
+    switch(action.type){
+        case "USER_UPDATE_PROFILE_REQUEST":
+            return {loading: true}
+
+        case "USER_UPDATE_PROFILE_SUCCESS":
+            return {loading:false, success:true, userInfo: action.payload}
+
+        case "USER_UPDATE_PROFILE_RESET":
+            return {}
+
+        case "USER_UPDATE_PROFILE_ FAIL":
+            return {loading:false,error:action.payload}
+
+        default:
+            return state
+    }  
+}
+
