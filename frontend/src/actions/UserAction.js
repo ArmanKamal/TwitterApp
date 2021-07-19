@@ -89,3 +89,46 @@ export const logout = () =>(dispatch) =>{
         type: "USER_LOGOUT"
     })
 }
+
+
+export const user_detail = (id) => async(dispatch, getState ) =>{
+    try{
+        dispatch({
+            type:"USER_DETAIL_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+        
+
+        let endpoint = `http://127.0.0.1:8000/api/users/${id}/`
+     
+        const response = await fetch(endpoint, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${userInfo.token}`
+            },
+          });
+          const data = await response.json()
+          console.log(data)
+          
+          dispatch({
+                type:"USER_DETAIL_SUCCESS",
+                payload:data
+            })
+
+            
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_DETAIL_FAIL",
+                payload: error.response && error.response.data.message
+                ?error.response.data.message
+                :error.message.detail
+            })
+        }
+        
+}
