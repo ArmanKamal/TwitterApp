@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { tweet_create,listTweet } from '../../actions/TweetAction';
+import '../../App.css'
 const TweetForm = () => {
 
     
@@ -33,12 +34,20 @@ const TweetForm = () => {
        
     }
 
+    const wrapper = {}
+
 
     return (
-        <form className="form" onSubmit={handleSubmit} method="POST">
-            <textarea  className="form-control"  onChange={(e) => setContent(e.target.value)} value={content} name="content"  placeholder="What's happening?"></textarea>
-            <button  className="btn btn-danger my-4" type="submit">Tweet</button>
-        </form>
+        <div className="row wrapper">
+            <form className="form" onSubmit={handleSubmit} method="POST">
+                <div className="col-md-12">
+                <textarea  className="form-control" rows="2" cols="10"  onChange={(e) => setContent(e.target.value)} value={content} name="content"  placeholder="What's happening?"></textarea>
+                </div>
+                <button className="btn btn-success my-2" type="submit">Tweet</button>
+            </form>
+            <hr />
+        </div>
+      
     );
 
 }

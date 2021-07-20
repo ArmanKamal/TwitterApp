@@ -30,8 +30,7 @@ function TweetList(props) {
         <React.Fragment>
             {canTweet === true && <TweetForm  />}
         {
-            loading? <Loader />
-                : error ?<Message>{error}</Message>
+         error ?<Message>{error}</Message>
                     :
                     <div>
                         {tweets.map((tweet) => 

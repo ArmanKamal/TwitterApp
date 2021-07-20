@@ -63,20 +63,21 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 class TweetCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
+    
     def post(self,request):
         serializer = TweetCreateSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
+            serializer.validated_data['user'] = request.user
             serializer.save()
             return Response(serializer.data, status=201)
         return Response({},status=400)
 
 ### Api for List of Tweets ###
 class TweetListView(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
     def get(self,request):
-        qs = Tweet.objects.all()
-        username = request.GET.get('username')
-        if username != None:
-            qs = qs.filter(user__username__iexact=username)
+        user = request.user
+        qs = Tweet.objects.filter(user=user)
         serializer = TweetSerializer(qs,many=True)
         print(serializer.data)
         return Response(serializer.data,status=200)

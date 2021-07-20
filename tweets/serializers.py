@@ -1,9 +1,9 @@
 from profiles.models import Profile
-from profiles.serializers import ProfileSerializer
 from re import L
 from django.db import models
 from rest_framework import serializers
 from .models import Tweet
+from profiles.serializers import PublicProfileSerializer
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -20,9 +20,10 @@ class TweetActionSerializer(serializers.Serializer):
 
 
 class TweetCreateSerializer(serializers.ModelSerializer):
+    user = PublicProfileSerializer(source='user.profile', read_only=True)
     class Meta:
         model = Tweet
-        fields = ['id','content']
+        fields = ['id','content','user']
 
     def validate_content(self,value):
         if len(value) > 240:
@@ -53,6 +54,17 @@ class UserSerializer(serializers.ModelSerializer):
         if name == '':
             name = obj.email
         return name
+
+    def validate_email(self, value):
+        lower_email = value.lower()
+        if User.objects.filter(email__iexact=lower_email).exists():
+            raise serializers.ValidationError("Duplicate Email")
+        return lower_email
+    
+    def validate_username(self, value):
+        if User.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError("Duplicate Username")
+        return value
 
 
 class UserSerializerWithToken(UserSerializer):

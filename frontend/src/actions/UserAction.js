@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const login = (email, password) => async(dispatch) =>{
     try{
         dispatch({
@@ -176,6 +178,95 @@ export const update_profile = (user) => async(dispatch, getState ) =>{
             })
 
             localStorage.setItem('userInfo', JSON.stringify(data))
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_UPDATE_PROFILE_FAIL",
+                payload: error.response && error.response.data.message
+                ?error.response.data.message
+                :error.message.detail
+            })
+        }
+        
+}
+
+
+
+export const user_profile = () => async(dispatch, getState ) =>{
+    try{
+        dispatch({
+            type:"USER__PROFILE_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+
+        
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+        
+            }
+        }
+        let endpoint = `http://127.0.0.1:8000/api/public_profile/${userInfo.username}`
+        const {data} = await axios.get(endpoint,
+            config
+            )
+
+        console.log(data)
+          
+        dispatch({
+                type:"USER_PROFILE_SUCCESS",
+                payload:data
+            })
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_PROFILE_FAIL",
+                payload: error.response && error.response.data.message
+                ?error.response.data.message
+                :error.message.detail
+            })
+        }
+        
+}
+
+
+
+export const update_public_profile = (user) => async(dispatch, getState ) =>{
+    try{
+        dispatch({
+            type:"USER_UPDATE_PUBLIC_PROFILE_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+        
+
+        let endpoint = `http://127.0.0.1:8000/api/public_profile/${userInfo.username}/edit/`
+        
+
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+        
+            }
+        }
+        
+        const {data} = await axios.get(endpoint,
+            config
+            )
+          
+        dispatch({
+                type:"USER_UPDATE_PUBLIC_PROFILE_SUCCESS",
+                payload:data
+            })
  
         }
 

@@ -13,9 +13,8 @@ function HomeScreen() {
     const {loading,tweets,error} = tweetCreate
 
     return (
-        <div>
+        <div className="container">
             {error && <Message>{error}</Message>}
-             <Link to="/login">Login</Link>
             <TweetList />
         </div>
     )

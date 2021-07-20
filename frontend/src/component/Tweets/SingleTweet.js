@@ -1,45 +1,44 @@
+import axios from 'axios'
 import React,{useState} from 'react'
+import { tweet_like,tweet_dislike,tweet_retweet } from '../../actions/TweetAction'
+import { TweetActionReducer } from '../../reducers/TweetReducers'
 
 const SingleTweet = ({tweet,didRetweet}) => {
    const [like, setlike] = useState(false)
+    
+   config = {
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization:
+    }
+}
 
     const handleLike = () => {
 
-       fetch('http://127.0.0.1:8000/api/tweets/action/',{
-           method:'POST',
-           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-           },
-           body: JSON.stringify({
-                id: tweet.id,
-                action: "like"
-           })
-       })
-       .then(response => response.json())
-       .then(data => {
+    const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
+        config,
+        {
+            id:tweet.id,
+            action:"like"
+        })
+
         setlike(true)
-       })
     }
 
-    const handleUnlike = () => {
+    const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
+        config,
+        {
+            id:tweet.id,
+            action:"unlike"
+        })
 
-        fetch('http://127.0.0.1:8000/api/tweets/action/',{
-            method:'POST',
-            headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                 id: tweet.id,
-                 action: "unlike"
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            setlike(false)
-        })
-     }
+        setlike(false)
+    }
+
+    
+    
+
 
     const handleRetweet = () => {
         fetch('http://127.0.0.1:8000/api/tweets/action/',{
@@ -55,6 +54,7 @@ const SingleTweet = ({tweet,didRetweet}) => {
        })
        .then(response => response.json())
        .then(data => {
+           console.log(data)
            didRetweet(data)
        })
     }
