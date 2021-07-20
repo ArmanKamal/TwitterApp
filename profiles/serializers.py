@@ -15,6 +15,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
         fields = [
             "first_name",
             "last_name",
+            "profile_pic",
             "id",
             "bio",
             "location",

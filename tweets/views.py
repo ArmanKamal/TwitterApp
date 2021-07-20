@@ -79,7 +79,6 @@ class TweetListView(APIView):
         user = request.user
         qs = Tweet.objects.filter(user=user)
         serializer = TweetSerializer(qs,many=True)
-        print(serializer.data)
         return Response(serializer.data,status=200)
 
 
@@ -119,11 +118,11 @@ class TweetActionView(APIView):
             data = serializer.validated_data
             tweet_id = data.get("id")
             action = data.get("action")
-            content = data.get("content")
             tweet_list = Tweet.objects.filter(id=tweet_id)
             if not tweet_list.exists():
                 return Response({},status=404)
             obj = tweet_list[0]
+            content = obj.content
 
             if action == "like":
                 obj.likers.add(request.user)
@@ -139,5 +138,6 @@ class TweetActionView(APIView):
                 parent_obj  = obj
                 new_tweet = Tweet.objects.create(user=request.user, parent_tweet=parent_obj,content=content)
                 serializer = TweetSerializer(new_tweet)
+                print(serializer.data)
                 return Response(serializer.data, status=201)
         return Response({'Not a valid action'})

@@ -12,6 +12,7 @@ class FollowerRelation(models.Model):
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_pic = models.ImageField(null=True,blank=True)
     location = models.CharField(max_length=255,null=True, blank=True)
     followers = models.ManyToManyField(User, related_name='following', blank=True)
     bio = models.TextField(blank=True, null=True)

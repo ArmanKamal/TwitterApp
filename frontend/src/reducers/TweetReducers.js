@@ -34,15 +34,15 @@ export const TweetCreateReducer = (state={},action) => {
 
 export const TweetActionReducer = (state={},action) => {
     switch(action.type){
-        case "TWEET_ACTUIB_REQUEST":
+        case "TWEET_ACTION_REQUEST":
             return {loading: true}
 
         case "TWEET_ACTION_SUCCESS":
             return {loading:false, success:true,tweet: action.payload}
 
-        case "TWEET_CREATE_FAIL":
+        case "TWEET_ACTION_FAIL":
             return {loading:false,error:action.payload}
-            
+
         case "TWEET_ACTION_RESET":
                 return {}
         default:

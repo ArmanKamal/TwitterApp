@@ -83,7 +83,7 @@ export const tweet_create = (content) => async(dispatch,getState) =>{
 }
 
 
-export const tweet_like = () => async(dispatch,getState) =>{
+export const tweet_like = (tweet_id) => async(dispatch,getState) =>{
     try{
         dispatch({
             type:"TWEET_ACTION_REQUEST"
@@ -100,11 +100,10 @@ export const tweet_like = () => async(dispatch,getState) =>{
             }
         }
         const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
-        config,
         {
-            id:tweet.id,
+            id:tweet_id,
             action:"like"
-        })
+        },config)
  
         dispatch({
                 type:"TWEET_ACTION_SUCCESS",
@@ -126,7 +125,7 @@ export const tweet_like = () => async(dispatch,getState) =>{
 }
 
 
-export const tweet_dislike = () => async(dispatch,getState) =>{
+export const tweet_dislike = (tweet_id) => async(dispatch,getState) =>{
     try{
         dispatch({
             type:"TWEET_ACTION_REQUEST"
@@ -143,11 +142,10 @@ export const tweet_dislike = () => async(dispatch,getState) =>{
             }
         }
         const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
-        config,
         {
-            id:tweet.id,
+            id:tweet_id,
             action:"unlike"
-        })
+        },config)
  
         dispatch({
                 type:"TWEET_ACTION_SUCCESS",
@@ -170,7 +168,7 @@ export const tweet_dislike = () => async(dispatch,getState) =>{
 
 
 
-export const tweet_retweet = () => async(dispatch,getState) =>{
+export const tweet_retweet = (tweet_id) => async(dispatch,getState) =>{
     try{
         dispatch({
             type:"TWEET_ACTION_REQUEST"
@@ -187,16 +185,18 @@ export const tweet_retweet = () => async(dispatch,getState) =>{
             }
         }
         const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
-        config,
         {
-            id:tweet.id,
+            id:tweet_id,
             action:"retweet"
-        })
+        },config)
+        
+        console.log(data)
  
         dispatch({
                 type:"TWEET_ACTION_SUCCESS",
                 payload:data
         }) 
+
       
         }
     
