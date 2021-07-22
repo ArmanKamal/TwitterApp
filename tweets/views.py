@@ -57,7 +57,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 
-
 ### Api for Creating Tweets ###
 
 

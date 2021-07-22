@@ -19,27 +19,39 @@ function Navbar() {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav float-right">
-
-                {userInfo? (
+               
+                {(userInfo)?
+                   <ul className="navbar-nav float-right">
                     <li className="nav-item dropdown">
-                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {userInfo.name}
-                         </a>
-                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                           <Link to = "/profile" className="dropdown-item" >Profile</Link>
-                            <Link to = "/settings" className="dropdown-item" >Settings</Link>
-                            <a className="dropdown-item" onClick={logoutHandler}>Logout</a>
-                         </div>
-                     </li>
-                ):   
-                <li className="nav-item">
-                     <Link className="nav-link" to="/login">Login</Link>
-                </li>
+                      <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         {userInfo}
+                      </a>
+                      <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <Link to = "/profile" className="dropdown-item" >Profile</Link>
+                         <Link to = "/settings" className="dropdown-item" >Settings</Link>
+                         <a className="dropdown-item" onClick={logoutHandler}>Logout</a>
+                      </div>
+                    </li>
+                  </ul>
+                
+                :
+                    <ul className="navbar-nav float-right">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/register">Register</Link>
+                        </li>
+                            
+                    </ul>
+                            
                     }
+                  
+               
 
            
-                </ul>
+   
             </div>
         </nav>
     )

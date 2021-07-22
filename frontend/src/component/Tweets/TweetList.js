@@ -7,8 +7,8 @@ import Loader from '../Loader'
 import Message from '../Message'
 function TweetList(props) {
 
-    const [currentTweets, setCurrentTweets] = useState([]);
     const TweetList = useSelector(state => state.TweetList)
+
     const { error, loading, tweets} = TweetList
     const dispatch = useDispatch()
     useEffect(() => {
@@ -16,29 +16,26 @@ function TweetList(props) {
      
     }, [dispatch])
 
-    
-    const didRetweet = (data) => {
-    console.log(data)
-        let oldTweets = tweets;
-        oldTweets.unshift(data)
-        setCurrentTweets(data)  
-    }
+  
 
 
     const canTweet = props.canTweet === 'false'? true: true
     return (
         <React.Fragment>
             {canTweet === true && <TweetForm  />}
-        {
-         error ?<Message>{error}</Message>
-                    :
-                    <div>
-                        {tweets.map((tweet) => 
-                            <SingleTweet tweet={tweet} key={tweet.id} didRetweet={didRetweet}/>
-                        )}
-                    </div> 
+        
+         {error &&<Message>{error}</Message> }
+         
+            if(loading != true){
+                 <div>
+                    {tweets.map((tweet) => 
+                        <SingleTweet tweet={tweet} key={tweet.id}/>
+                    )}
+                 </div> 
+            
+            }
                    
-        }
+        
         </React.Fragment>
     )
 }

@@ -99,7 +99,7 @@ export const tweet_like = (tweet_id) => async(dispatch,getState) =>{
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
+        const {data} = await axios.post('http://127.0.0.1:8000/api/tweets/action/',
         {
             id:tweet_id,
             action:"like"
@@ -141,7 +141,7 @@ export const tweet_dislike = (tweet_id) => async(dispatch,getState) =>{
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
+        const {data} = await axios.post('http://127.0.0.1:8000/api/tweets/action/',
         {
             id:tweet_id,
             action:"unlike"
@@ -184,7 +184,7 @@ export const tweet_retweet = (tweet_id) => async(dispatch,getState) =>{
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const {data} = axios.post('http://127.0.0.1:8000/api/tweets/action/',
+        const {data} = await axios.post('http://127.0.0.1:8000/api/tweets/action/',
         {
             id:tweet_id,
             action:"retweet"

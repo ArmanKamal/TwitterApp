@@ -29,7 +29,7 @@ function LoginScreen({location,history}) {
         else{
             dispatch(login(email,password))
         }
-        console.log(error)
+     
     }
 
     return (

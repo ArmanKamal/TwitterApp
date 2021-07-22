@@ -67,6 +67,7 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
 
+
 class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
@@ -87,3 +88,4 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         for k,v in serializer.items():
             data[k] = v
         return data
+        
