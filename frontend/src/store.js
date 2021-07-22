@@ -1,8 +1,8 @@
 import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools} from 'redux-devtools-extension'
-import {TweetListReducer,TweetCreateReducer, TweetActionReducer} from './reducers/TweetReducers'
-import { UserDetailReducer, UserLoginReducer, UserRegisterReducer, UserUpdateProfileReducer, UserPublicProfileReducer} from './reducers/UserReducers' 
+import {TweetListReducer,TweetCreateReducer, TweetActionReducer,TweetDetailReducer,TweetFeedReducer} from './reducers/TweetReducers'
+import { UserDetailReducer, UserLoginReducer, UserRegisterReducer, UserUpdateProfileReducer, UserPublicProfileReducer,UserPublicProfileListReducer, UserFollowActionReducer,UserUnFollowActionReducer} from './reducers/UserReducers' 
 
 
 const reducer = combineReducers({
@@ -12,14 +12,20 @@ const reducer = combineReducers({
     UserDetail: UserDetailReducer,
     UserUpdateProfile: UserUpdateProfileReducer,
     UserPublicProfile:UserPublicProfileReducer,
+    UserFollowAction:UserFollowActionReducer,
+    UserUnFollowAction:UserUnFollowActionReducer,
+    UserPublicProfileList:UserPublicProfileListReducer,
     TweetCreate: TweetCreateReducer,
-    TweetAction: TweetActionReducer
+    TweetAction: TweetActionReducer,
+    TweetDetail: TweetDetailReducer,
+    TweetFeed:TweetFeedReducer
+
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?
     JSON.parse(localStorage.getItem('userInfo')) : null
 
-    
+
 const initialState = {
     UserLogin : {userInfo: userInfoFromStorage}
 }

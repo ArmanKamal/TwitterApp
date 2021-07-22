@@ -13,7 +13,7 @@ function TweetList(props) {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(listTweet())
-     
+        
     }, [dispatch])
 
   
@@ -22,14 +22,15 @@ function TweetList(props) {
     return (
         <React.Fragment>
         
-         {error &&<Message>{error}</Message> }
-         
-          
+         {error ?<Message>{error}</Message> :     
                  <div>
                     {tweets.map((tweet) => 
                         <SingleTweet tweet={tweet} key={tweet.id}/>
                     )}
                  </div> 
+            }
+         
+          
             
             
                    

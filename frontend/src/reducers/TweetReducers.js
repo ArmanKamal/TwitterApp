@@ -15,6 +15,42 @@ export const TweetListReducer = (state = {tweets:[]},action) =>{
      }
 }   
 
+export const TweetFeedReducer = (state = {tweets:[]},action) =>{
+    switch(action.type){
+        case "TWEET_FEED_LOADING":
+            return {loading:true, tweets:[]}
+    
+        case "TWEET_FEED_SUCCESS":
+            return {loading:false, tweets: action.payload}
+
+        case "TWEET_FEED_FAILED":
+            return {loading:false, error: action.payload}
+        
+
+        default:
+            return state
+     }
+}   
+
+
+export const TweetDetailReducer = (state = {},action) =>{
+    switch(action.type){
+        case "TWEET_DETAIL_LOADING":
+            return {loading:true}
+    
+        case "TWEET_DETAIL_SUCCESS":
+            return {loading:false, tweet: action.payload}
+
+        case "TWEET_DETAIL_FAIL":
+            return {loading:false, error: action.payload}
+        
+
+        default:
+            return state
+     }
+}   
+
+
 export const TweetCreateReducer = (state={},action) => {
     switch(action.type){
         case "TWEET_CREATE_REQUEST":
@@ -42,7 +78,7 @@ export const TweetActionReducer = (state={},action) => {
 
         case "TWEET_ACTION_FAIL":
             return {loading:false,error:action.payload}
-
+ 
         case "TWEET_ACTION_RESET":
                 return {}
         default:

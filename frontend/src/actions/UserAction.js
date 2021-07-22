@@ -232,3 +232,140 @@ export const user_profile = () => async(dispatch, getState ) =>{
 
 
 
+export const user_profile_list = () => async(dispatch, getState ) =>{
+    try{
+        dispatch({
+            type:"USER__PROFILE_LIST_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+
+        
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+        
+            }
+        }
+        let endpoint = `http://127.0.0.1:8000/api/public_profiles/`
+        const {data} = await axios.get(endpoint,
+            config
+            )
+
+        
+          
+        dispatch({
+                type:"USER_PROFILE_LIST_SUCCESS",
+                payload:data
+            })
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_PROFILE_LIST_FAIL",
+                payload: error.response && error.response.data.detail
+                ?error.response.data.detail
+                :error.message
+            })
+        }
+        
+}
+
+
+
+export const user_follow = (username) => async(dispatch, getState ) =>{
+    
+    try{
+        dispatch({
+            type:"USER_FOLLOW_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+
+        
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+        
+            }
+        }
+        let endpoint = `http://127.0.0.1:8000/api/public_profile/${username}`
+        const {data} = await axios.post(endpoint,
+            {"action":"follow"},
+            config
+            )
+
+        
+          
+        dispatch({
+                type:"USER_FOLLOW_SUCCESS",
+                payload:data
+            })
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_FOLLOW_FAIL",
+                payload: error.response && error.response.data.detail
+                ?error.response.data.detail
+                :error.message
+            })
+        }
+        
+}
+
+
+
+
+export const user_unfollow = (username) => async(dispatch, getState ) =>{
+    
+    try{
+        dispatch({
+            type:"USER_UNFOLLOW_REQUEST"
+        })
+
+        const { 
+            UserLogin: { userInfo},
+        } = getState()
+
+        
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+        
+            }
+        }
+        let endpoint = `http://127.0.0.1:8000/api/public_profile/${username}`
+        const {data} = await axios.post(endpoint,
+            {"action":"unfollow"},
+            config
+            )
+
+        
+          
+        dispatch({
+                type:"USER_UNFOLLOW_SUCCESS",
+                payload:data
+            })
+ 
+        }
+
+        catch(error){
+            dispatch({
+                type: "USER_UNFOLLOW_FAIL",
+                payload: error.response && error.response.data.detail
+                ?error.response.data.detail
+                :error.message
+            })
+        }
+        
+}

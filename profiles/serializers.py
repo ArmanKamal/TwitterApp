@@ -48,3 +48,9 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     
     def get_follower_count(self, obj):
         return obj.followers.count()
+
+
+class PublicProfileListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Profile
+        fields = ['__all__']

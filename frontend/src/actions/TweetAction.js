@@ -40,6 +40,86 @@ export const listTweet = () => async (dispatch,getState) => {
 }
 
 
+export const tweet_feed_only_view = () => async (dispatch,getState) => {
+    try{
+            dispatch({type: "TWEET_FEED_LOADING"})
+
+            let endpoint = 'http://127.0.0.1:8000/api/tweets/feed/'
+
+            const { 
+                UserLogin: { userInfo},
+            } = getState()
+    
+
+            const config = {
+                headers:{
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            }
+
+            const {data} = await axios.get(endpoint,config)
+            
+                dispatch({
+                    type: "TWEET_FEED_SUCCESS",
+                    payload: data
+                })
+            
+       
+
+    }
+
+    catch(error){
+        dispatch({
+            type: "TWEET_FEED_FAILED",
+            payload: error.response && error.response.data.message
+            ?error.response.data.message
+            :error.message
+        })
+    }
+}
+
+
+export const tweet_detail = (id) => async (dispatch,getState) => {
+    try{
+            dispatch({type: "TWEET_DETAIL_LOADING"})
+
+            let endpoint = `http://127.0.0.1:8000/api/tweets/${id}`
+
+            const { 
+                UserLogin: { userInfo},
+            } = getState()
+    
+
+            const config = {
+                headers:{
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            }
+
+            const {data} = await axios.get(endpoint,config)
+            
+                dispatch({
+                    type: "TWEET_DETAIL_SUCCESS",
+                    payload: data
+                })
+            
+       
+
+    }
+
+    catch(error){
+        dispatch({
+            type: "TWEET_DETAIL_FAIL",
+            payload: error.response && error.response.data.message
+            ?error.response.data.message
+            :error.message
+        })
+    }
+}
+
+
 
 export const tweet_create = (content) => async(dispatch,getState) =>{
     try{

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   tweet_like,
   tweet_dislike,
@@ -12,11 +13,11 @@ const SingleTweet = ({ tweet }) => {
   const dispatch = useDispatch();
   const TweetAction = useSelector((state) => state.TweetAction);
   const { success } = TweetAction;
+
   const [liked, setLiked] = useState();
 
   const handleLike = () => {
     dispatch(tweet_like(tweet.id));
-    setCount(count + 1);
     setLiked(true);
   };
 
@@ -30,6 +31,8 @@ const SingleTweet = ({ tweet }) => {
     dispatch(tweet_retweet(tweet.id));
     window.location.reload()
   };
+
+
 
   return (
 
@@ -53,17 +56,22 @@ const SingleTweet = ({ tweet }) => {
             <div className="col-10 d-flex justify-content-start">
             {tweet.parent_tweet ?(
                 <div>
-                  <p className="font-weight-bolder mb-2">You Re-tweeted</p>
+                  <p className="font-weight-bolder mb-2">{tweet.parent_tweet.user.first_name } Re-tweeted</p>
                   <ul className="list-unstyled">
-                        <li className="ml-3">{tweet.parent_tweet.content}</li>
+                  <li>{tweet.user.first_name}</li>
+                        <li className="ml-3"><Link to={`/tweets/${tweet.id}/`}>{tweet.parent_tweet.content}</Link></li>
                  </ul>
                 </div>
               )
               :
               <ul className="list-unstyled mt-3 mb-4">
-                    <li>{tweet.content}</li>
+                   <li>{tweet.user.first_name}</li>
+                   <li className="ml-3"><Link to={`/tweets/${tweet.id}/`}>{tweet.content}</Link></li>
                 </ul>
+
+               
             }
+       
 
           
               
@@ -76,11 +84,11 @@ const SingleTweet = ({ tweet }) => {
             <div className="col-4">
               {liked ? (
                 <button className="btn btn-info" onClick={handleUnlike}>
-                  {count} unlike
+                   unlike
                 </button>
               ) : (
                 <button className="btn btn-info" onClick={handleLike}>
-                  {count} like
+                   like
                 </button>
               )}
             </div>

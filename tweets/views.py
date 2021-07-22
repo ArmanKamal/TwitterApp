@@ -76,10 +76,20 @@ class TweetListView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
     def get(self,request):
         user = request.user
-        qs = Tweet.objects.filter(user=user)
+        qs = Tweet.objects.all()
         serializer = TweetSerializer(qs,many=True)
+        print(serializer.data)
         return Response(serializer.data,status=200)
 
+
+class TweetFeedViewForUser(APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    def get(self,request):
+        user = request.user
+        qs = Tweet.objects.filter(user=user)
+        serializer = TweetSerializer(qs,many=True)
+        print(serializer.data)
+        return Response(serializer.data,status=200)
 
 ### Api for Detail tweet ###
 

@@ -38,6 +38,7 @@ function ProfileScreen({location,history}) {
             else{
                 setName(user.name)
                 setEmail(user.email)
+           
             }
         }
         if(success){

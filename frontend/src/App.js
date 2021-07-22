@@ -7,7 +7,8 @@ import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import PublicProfileScreen from './screens/PublicProfile';
-
+import OtherProfileList from './screens/OtherProfileList';
+import TweetDetailScreen from './screens/TweetDetailScreen';
 function App() {
   return (
     <Router>
@@ -19,6 +20,8 @@ function App() {
           <Route path='/settings' component={ProfileScreen} />
           <Route path='/profile' component={PublicProfileScreen} />
           <Route path='/register' component={RegisterScreen} />
+          <Route path='/tweets/:id' component={TweetDetailScreen} />
+          <Route path='/other_profiles/' component={OtherProfileList} />
         </main>
       </div>
     

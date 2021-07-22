@@ -1,7 +1,7 @@
 from profiles.models import Profile
 from re import L
 from django.db import models
-from rest_framework import serializers
+from rest_framework import request, serializers
 from .models import Tweet
 from profiles.serializers import PublicProfileSerializer
 from django.contrib.auth.models import User
@@ -33,15 +33,21 @@ class TweetCreateSerializer(serializers.ModelSerializer):
 
 class TweetSerializer(serializers.ModelSerializer):
     likers = serializers.SerializerMethodField(read_only=True)
+    user = PublicProfileSerializer(source='user.profile', read_only=True)
     parent_tweet = TweetCreateSerializer(read_only=True)
-
+   
     class Meta:
         model = Tweet
-        fields = ['id','content','likers',"parent_tweet","is_retweet"]
+        fields = ['id','content','user','likers',"parent_tweet","is_retweet"]
 
     def get_likers(self,obj):
         return obj.likers.count()
     
+    
+    
+    
+
+
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -55,16 +61,7 @@ class UserSerializer(serializers.ModelSerializer):
             name = obj.email
         return name
 
-    def validate_email(self, value):
-        lower_email = value.lower()
-        if User.objects.filter(email__iexact=lower_email).exists():
-            raise serializers.ValidationError("Duplicate Email")
-        return lower_email
-    
-    def validate_username(self, value):
-        if User.objects.filter(username__iexact=value).exists():
-            raise serializers.ValidationError("Duplicate Username")
-        return value
+  
 
 
 

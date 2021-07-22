@@ -9,6 +9,7 @@ function Navbar() {
     const dispatch = useDispatch()
     const logoutHandler = () => {
         dispatch(logout())
+        window.location.reload()
     }
 
     return (
@@ -21,7 +22,7 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                
                 {(userInfo)?
-                   <ul className="navbar-nav float-right">
+                   <ul className="navbar-nav ">
                     <li className="nav-item dropdown">
                       <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                          {userInfo.name}
@@ -32,6 +33,10 @@ function Navbar() {
                          <a className="dropdown-item" onClick={logoutHandler}>Logout</a>
                       </div>
                     </li>
+                    <li className="nav-item ">
+                            <Link className="nav-link" to="/other_profiles/">Other Profiles</Link>
+                     </li>
+                       
                   </ul>
                 
                 :
@@ -48,7 +53,7 @@ function Navbar() {
                             
                     }
                   
-               
+                     
 
            
    
