@@ -24,7 +24,7 @@ function Navbar() {
                    <ul className="navbar-nav float-right">
                     <li className="nav-item dropdown">
                       <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                         {userInfo}
+                         {userInfo.name}
                       </a>
                       <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <Link to = "/profile" className="dropdown-item" >Profile</Link>

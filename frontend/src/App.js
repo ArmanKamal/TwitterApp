@@ -8,7 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import PublicProfileScreen from './screens/PublicProfile';
 
-function App(props) {
+function App() {
   return (
     <Router>
       <Navbar />

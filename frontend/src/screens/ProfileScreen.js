@@ -40,6 +40,9 @@ function ProfileScreen({location,history}) {
                 setEmail(user.email)
             }
         }
+        if(success){
+            setMessage('Updated...')
+        }
     },[dispatch,user, history,userInfo,success])
 
     const handleSubmit = (e) => {

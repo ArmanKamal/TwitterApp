@@ -16,11 +16,15 @@ const reducer = combineReducers({
     TweetAction: TweetActionReducer
 })
 
-const userInfoFromStorage = localStorage.getItem('userInfo')?
-             JSON.parse(localStorage.getItem('userInfo')): null
+const userInfoFromStorage = localStorage.getItem('userInfo') ?
+    JSON.parse(localStorage.getItem('userInfo')) : null
+
+    
 const initialState = {
     UserLogin : {userInfo: userInfoFromStorage}
 }
+
+
 const middleware = [thunk]
 
 const store = createStore(reducer,initialState,composeWithDevTools(applyMiddleware(...middleware)))

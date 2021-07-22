@@ -45,7 +45,7 @@ const TweetForm = () => {
                 </div>
                 <button className="btn btn-success my-2" type="submit">Tweet</button>
             </form>
-            <hr />
+            
         </div>
       
     );

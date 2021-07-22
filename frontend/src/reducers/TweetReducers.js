@@ -38,7 +38,7 @@ export const TweetActionReducer = (state={},action) => {
             return {loading: true}
 
         case "TWEET_ACTION_SUCCESS":
-            return {loading:false, success:true,tweet: action.payload}
+            return {loading:false, success:true}
 
         case "TWEET_ACTION_FAIL":
             return {loading:false,error:action.payload}

@@ -1,8 +1,8 @@
 import React,{useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import TweetForm from '../component/Tweets/TweetForm'
+
 import TweetList from '../component/Tweets/TweetList'
+import TweetForm from '../component/Tweets/TweetForm'
 import Message from '../component/Message'
 
 
@@ -24,8 +24,8 @@ function HomeScreen({history}) {
 
     return (
         <div className="container">
-        
-            {/* {error && <Message>{error}</Message>} */}
+            <TweetForm />
+            {error && <Message>{error}</Message>}
             <TweetList />
         </div>
     )
