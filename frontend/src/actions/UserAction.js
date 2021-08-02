@@ -300,7 +300,7 @@ export const user_follow = (username) => async(dispatch, getState ) =>{
         const {data} = await axios.post(endpoint,
             {"action":"follow"},
             config
-            )
+            )   
 
         
           

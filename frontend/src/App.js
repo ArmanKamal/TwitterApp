@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './component/Navbar';
 import TweetList from './component/Tweets/TweetList';
-import { BrowserRouter as Router, Route} from 'react-router-dom'
+import { HashRouter as Router, Route} from 'react-router-dom'
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
