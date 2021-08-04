@@ -121,7 +121,7 @@ export const tweet_detail = (id) => async (dispatch,getState) => {
 
 
 
-export const tweet_create = (content) => async(dispatch,getState) =>{
+export const tweet_create = (content,image) => async(dispatch,getState) =>{
     try{
         dispatch({
             type:"TWEET_CREATE_REQUEST"
@@ -137,10 +137,12 @@ export const tweet_create = (content) => async(dispatch,getState) =>{
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
+        
         let endpoint = 'http://127.0.0.1:8000/api/tweets/create/'
         const {data} = await axios.post(endpoint,
             {'content':content,
-                'username':userInfo},config
+            'image':image,
+            },config
             )
  
         dispatch({

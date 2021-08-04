@@ -23,7 +23,7 @@ class TweetCreateSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True)
     class Meta:
         model = Tweet
-        fields = ['id','content','user']
+        fields = ['id','content','user','image']
 
     def validate_content(self,value):
         if len(value) > 240:

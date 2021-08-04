@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tweets.apps.TweetsConfig',
     'corsheaders',
-    'profiles'
+    'profiles',
+    'storages'
 
    
 ]
@@ -130,7 +131,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static')
@@ -142,8 +142,19 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 DEFAULT_AUTHENTICATION_CLASSES = [ 'rest_framework_simplejwt.authentication.JWTAuthentication' ]
 
+MEDIA_URL = '/images/'
 
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+
+
+AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+AWS_QUERYSTRING_AUTH = False
 
 from datetime import timedelta
 

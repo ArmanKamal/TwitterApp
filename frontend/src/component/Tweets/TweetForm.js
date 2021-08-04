@@ -7,13 +7,16 @@ const TweetForm = () => {
     
     const [content, setContent] = useState('')
 
+    const [image, setImage] = useState('')
+
     const dispatch = useDispatch()
 
     const tweetCreate = useSelector(state => state.TweetCreate)
     const {tweet,success} = tweetCreate
 
-    const tweetList = useSelector(state => state.TweetList)
-    const {tweets} = tweetList
+  
+
+    const {error,setError} = useState('')
 
     useEffect(() => {
         if(success){
@@ -27,21 +30,27 @@ const TweetForm = () => {
         
         e.preventDefault()
 
+        if(content.length>240){
+            setError('Content cannot be more than 240')
+        }
+
         dispatch(
-            tweet_create(content)
+            tweet_create(content,image)
         )
         setContent('')
        
     }
 
-    const wrapper = {}
+
 
 
     return (
         <div className="row wrapper">
-            <form className="form" onSubmit={handleSubmit} method="POST">
+            {error && <p className="text-danger">{error}</p>}
+            <form className="form" onSubmit={handleSubmit} method="POST" enctype="multipart/form-data">
                 <div className="col-md-12">
                 <textarea  className="form-control" rows="2" cols="10"  onChange={(e) => setContent(e.target.value)} value={content} name="content"  placeholder="What's happening?"></textarea>
+                <input type="file" value={image} onChange={(e) => setImage(e.target.files[0])} multiple = "false" />
                 </div>
                 <button className="btn btn-success my-2" type="submit">Tweet</button>
             </form>
