@@ -133,16 +133,16 @@ export const tweet_create = (content,image) => async(dispatch,getState) =>{
 
         const config = {
             headers:{
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        
+
+        let formData = new FormData();
+        formData.append('content',content)
+        formData.append('image',image)        
         let endpoint = 'http://127.0.0.1:8000/api/tweets/create/'
-        const {data} = await axios.post(endpoint,
-            {'content':content,
-            'image':image,
-            },config
+        const {data} = await axios.post(endpoint,formData,config
             )
  
         dispatch({

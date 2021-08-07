@@ -28,8 +28,8 @@ export const login = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "USER_LOGIN_FAIL",
-            payload: error.response && error.response.data.detail
-                ? error.response.data.detail
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
                 : error.message,
         })
     }
@@ -75,7 +75,7 @@ export const register = (name,email, password) => async(dispatch) =>{
             dispatch({
                 type: "USER_REGISTER_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -129,7 +129,7 @@ export const user_detail = (id) => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_DETAIL_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -179,7 +179,7 @@ export const update_profile = (user) => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_UPDATE_PROFILE_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -223,7 +223,7 @@ export const user_profile = () => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_PROFILE_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -268,7 +268,7 @@ export const user_profile_list = () => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_PROFILE_LIST_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -315,7 +315,7 @@ export const user_follow = (username) => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_FOLLOW_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }
@@ -363,7 +363,7 @@ export const user_unfollow = (username) => async(dispatch, getState ) =>{
             dispatch({
                 type: "USER_UNFOLLOW_FAIL",
                 payload: error.response && error.response.data.detail
-                ?error.response.data.detail
+                ?error.response.data.message
                 :error.message
             })
         }

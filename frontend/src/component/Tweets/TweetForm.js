@@ -47,10 +47,10 @@ const TweetForm = () => {
     return (
         <div className="row wrapper">
             {error && <p className="text-danger">{error}</p>}
-            <form className="form" onSubmit={handleSubmit} method="POST" enctype="multipart/form-data">
+            <form className="form" onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
                 <div className="col-md-12">
                 <textarea  className="form-control" rows="2" cols="10"  onChange={(e) => setContent(e.target.value)} value={content} name="content"  placeholder="What's happening?"></textarea>
-                <input type="file" value={image} onChange={(e) => setImage(e.target.files[0])} multiple = "false" />
+                <input type="file" onChange={(e) => setImage(e.target.files[0])} />
                 </div>
                 <button className="btn btn-success my-2" type="submit">Tweet</button>
             </form>

@@ -143,7 +143,7 @@ CORS_URLS_REGEX = r'^/api/.*$'
 DEFAULT_AUTHENTICATION_CLASSES = [ 'rest_framework_simplejwt.authentication.JWTAuthentication' ]
 
 MEDIA_URL = '/images/'
-
+MEDIA_ROOT = 'static/images'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 

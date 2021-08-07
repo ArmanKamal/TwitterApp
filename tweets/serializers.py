@@ -21,9 +21,11 @@ class TweetActionSerializer(serializers.Serializer):
 
 class TweetCreateSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True)
+    image = serializers.ImageField(use_url=True, allow_empty_file=True)
     class Meta:
         model = Tweet
-        fields = ['id','content','user','image']
+        fields = ['id','content','image','user']
+
 
     def validate_content(self,value):
         if len(value) > 240:
@@ -38,7 +40,7 @@ class TweetSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Tweet
-        fields = ['id','content','user','likers',"parent_tweet","is_retweet"]
+        fields = ['id','content','user','likers',"image","parent_tweet","is_retweet"]
 
     def get_likers(self,obj):
         return obj.likers.count()

@@ -18,6 +18,7 @@ const SingleTweet = ({ tweet }) => {
 
   const handleLike = () => {
     dispatch(tweet_like(tweet.id));
+    setCount(count + 1);
     setLiked(true);
   };
 
@@ -38,7 +39,7 @@ const SingleTweet = ({ tweet }) => {
 
     
     <div className="card-deck text-center my-2">
-      <div className="card col shadow-sm">
+      <div className="card col-md-6 mx-auto shadow-sm">
         <div className="card-body">
           <div className="row">
          
@@ -59,13 +60,15 @@ const SingleTweet = ({ tweet }) => {
                   <p className="font-weight-bolder mb-2">{tweet.parent_tweet.user.first_name } Re-tweeted</p>
                   <ul className="list-unstyled">
                   <li>{tweet.user.first_name}</li>
-                        <li className="ml-3"><Link to={`/tweets/${tweet.id}/`}>{tweet.parent_tweet.content}</Link></li>
+                  {tweet.image && <img src={tweet.image} width="300px" height="300px" />}
+                   <li className="ml-3"><Link to={`/tweets/${tweet.id}/`}>{tweet.parent_tweet.content}</Link></li>
                  </ul>
                 </div>
               )
               :
-              <ul className="list-unstyled mt-3 mb-4">
+              <ul className="list-unstyled mt-3 mb-4 ml-4">
                    <li>{tweet.user.first_name}</li>
+                   {tweet.image && <img src={tweet.image} width="300px" height="300px" />}
                    <li className="ml-3"><Link to={`/tweets/${tweet.id}/`}>{tweet.content}</Link></li>
                 </ul>
 
@@ -91,6 +94,7 @@ const SingleTweet = ({ tweet }) => {
                    like
                 </button>
               )}
+              {count}
             </div>
           </div>
         </div>

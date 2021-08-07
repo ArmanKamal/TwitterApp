@@ -10,7 +10,7 @@ from profiles.models import Profile
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer,UserSerializerWithToken,MyTokenObtainPairSerializer
 from django.contrib.auth.models import User
-
+from rest_framework.parsers import MultiPartParser,FormParser
 
 # Api for User ##
 @permission_classes([IsAuthenticated])
@@ -62,9 +62,11 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 class TweetCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated, ]
+    parser_classes = [FormParser, MultiPartParser]
     
     def post(self,request):
         serializer = TweetCreateSerializer(data = request.data)
+        print(serializer)
         if serializer.is_valid(raise_exception=True):
             serializer.validated_data['user'] = request.user
             serializer.save()
@@ -132,6 +134,7 @@ class TweetActionView(APIView):
                 return Response({},status=404)
             obj = tweet_list[0]
             content = obj.content
+            image = obj.image
 
             if action == "like":
                 obj.likers.add(request.user)
@@ -145,7 +148,7 @@ class TweetActionView(APIView):
 
             elif action == "retweet":
                 parent_obj  = obj
-                new_tweet = Tweet.objects.create(user=request.user, parent_tweet=parent_obj,content=content)
+                new_tweet = Tweet.objects.create(user=request.user, parent_tweet=parent_obj,content=content,image=image)
                 serializer = TweetSerializer(new_tweet)
                 print(serializer.data)
                 return Response(serializer.data, status=201)
