@@ -4,7 +4,11 @@ import {
   tweet_like,
   tweet_dislike,
   tweet_retweet,
+  tweet_delete,
+  listTweet,
 } from "../../actions/TweetAction";
+import { useHistory } from 'react-router';
+
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +19,12 @@ const SingleTweet = ({ tweet }) => {
   const { success } = TweetAction;
 
   const [liked, setLiked] = useState();
+
+  const routerHistory = useHistory();
+  
+  const userLogin = useSelector((state) => state.UserLogin);
+  const { userInfo } = userLogin;
+
 
   const handleLike = () => {
     dispatch(tweet_like(tweet.id));
@@ -30,8 +40,13 @@ const SingleTweet = ({ tweet }) => {
 
   const handleRetweet = () => {
     dispatch(tweet_retweet(tweet.id));
-    window.location.reload()
+    
   };
+
+  const handleTweetDelete = () => {
+    dispatch(tweet_delete(tweet.id))
+    dispatch(listTweet())
+  }
 
 
 
@@ -94,8 +109,13 @@ const SingleTweet = ({ tweet }) => {
                    like
                 </button>
               )}
-              {count}
+
             </div>
+            {userInfo.username === tweet.user.username ?
+            <div className="col-4">
+                <button className="btn btn-danger" onClick={handleTweetDelete}>Delete</button>
+            </div>:''
+            }
           </div>
         </div>
       </div>

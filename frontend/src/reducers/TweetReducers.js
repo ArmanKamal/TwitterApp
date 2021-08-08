@@ -86,4 +86,23 @@ export const TweetActionReducer = (state={},action) => {
     }    
 }
 
+export const TweetDeleteReducer = (state={},action) => {
+    switch(action.type){
+        case "TWEET_DELETE_REQUEST":
+            return {loading: true}
+
+        case "TWEET_DELETE_SUCCESS":
+            return {loading:false, success:true}
+
+        case "TWEET_DELETE_FAIL":
+            return {loading:false,error:action.payload}
+ 
+        case "TWEET_DELETE_RESET":
+                return {}
+        default:
+            return state
+    }    
+}
+
+
 

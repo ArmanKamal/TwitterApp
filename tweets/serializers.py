@@ -21,7 +21,7 @@ class TweetActionSerializer(serializers.Serializer):
 
 class TweetCreateSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True)
-    image = serializers.ImageField(use_url=True, allow_empty_file=True)
+    image = serializers.ImageField(use_url=True, allow_empty_file=True, required=False)
     class Meta:
         model = Tweet
         fields = ['id','content','image','user']

@@ -1,7 +1,7 @@
 import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools} from 'redux-devtools-extension'
-import {TweetListReducer,TweetCreateReducer, TweetActionReducer,TweetDetailReducer,TweetFeedReducer} from './reducers/TweetReducers'
+import {TweetListReducer,TweetCreateReducer, TweetActionReducer,TweetDetailReducer,TweetFeedReducer,TweetDeleteReducer} from './reducers/TweetReducers'
 import { UserDetailReducer, UserLoginReducer, UserRegisterReducer, UserUpdateProfileReducer, UserPublicProfileReducer,UserPublicProfileListReducer, UserFollowActionReducer,UserUnFollowActionReducer} from './reducers/UserReducers' 
 
 
@@ -18,7 +18,8 @@ const reducer = combineReducers({
     TweetCreate: TweetCreateReducer,
     TweetAction: TweetActionReducer,
     TweetDetail: TweetDetailReducer,
-    TweetFeed:TweetFeedReducer
+    TweetFeed:TweetFeedReducer,
+    TweetDelete:TweetDeleteReducer
 
 })
 

@@ -30,7 +30,7 @@ function PublicProfileScreen({ location, history }) {
     dispatch(tweet_feed_only_view())
   }, [dispatch]);
 
-  console.log(user);
+
 
   return (
     <div className="container">
